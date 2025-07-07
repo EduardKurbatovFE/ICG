@@ -1,18 +1,18 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ScreenGradientContainerProps } from './screenGradientContainerTypes';
-import { screenGradientContainerStyles } from './screenGradientContainerStyles';
+import { COLORS } from '@/styles/colors';
+import { GLOBAL_STYLES } from '@/styles/global';
 
 const ScreenGradientContainer: React.FC<ScreenGradientContainerProps> = ({
   children,
 }) => {
   return (
     <LinearGradient
-      colors={['#1e1e2f', '#2c2c3a', '#9370db']}
+      colors={[COLORS.darkBlue, COLORS.grey, COLORS.purple]}
       start={{ x: 0, y: 0 }}
       end={{ x: 0, y: 1 }}
-      style={screenGradientContainerStyles.container}
+      style={GLOBAL_STYLES.container}
     >
       {children}
     </LinearGradient>

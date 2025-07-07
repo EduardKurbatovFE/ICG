@@ -18,34 +18,49 @@ import { useSignInForm } from './useSignInForm';
 import { Controller } from 'react-hook-form';
 import { isEmpty } from 'lodash';
 import GoogleLogo from '../../../assets/logos/googleLogo.svg';
+import { METRICS } from '@/styles/metrics';
+import { GLOBAL_STYLES } from '@/styles/global';
+import { COLORS } from '@/styles/colors';
+import { IS_IOS } from '@/constants';
+import AnimatedMainLogo from '@/components/common/animatedMainLogo';
 
 const SignInForm = () => {
-  const { signInFormControl, errors } = useSignInForm();
+  const {
+    signInFormControl,
+    errors,
+    isLoading,
+    handleSignIn,
+    signInWithGoogle,
+  } = useSignInForm();
 
   return (
     <Pressable
-      style={{ flex: 1 }}
+      style={GLOBAL_STYLES.container}
       onPress={Keyboard.dismiss}
       accessible={false}
     >
       <ScreenGradientContainer>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={IS_IOS ? 'padding' : 'height'}
           style={signInFormStyles.inner}
         >
           <SafeAreaProvider>
             <SafeAreaView style={signInFormStyles.safeArea}>
               <View style={signInFormStyles.logoContainer}>
-                <Image
-                  source={require('../../../assets/logos/ICGMainLogo.png')}
-                  style={{ width: 150, height: 150 }}
-                />
+                {isLoading ? (
+                  <AnimatedMainLogo />
+                ) : (
+                  <Image
+                    source={require('../../../assets/logos/ICGMainLogo.png')}
+                    style={GLOBAL_STYLES.mainLogo}
+                  />
+                )}
               </View>
 
               <View
                 style={{
-                  gap: isEmpty(errors) ? 20 : 0,
-                  marginBottom: isEmpty(errors) ? 20 : 0,
+                  gap: isEmpty(errors) ? METRICS.gap.medium : 0,
+                  marginBottom: isEmpty(errors) ? METRICS.gap.medium : 0,
                 }}
               >
                 <View>
@@ -54,17 +69,21 @@ const SignInForm = () => {
                     name="userName"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
-                        style={signInFormStyles.input}
+                        style={[
+                          GLOBAL_STYLES.input,
+                          isLoading && GLOBAL_STYLES.inputDisabled,
+                        ]}
                         value={value}
                         onChangeText={onChange}
                         placeholder="Username"
-                        placeholderTextColor={'#9370db'}
+                        placeholderTextColor={COLORS.purple}
+                        editable={!isLoading}
                       />
                     )}
                   />
 
                   {errors.userName?.message && (
-                    <Text style={signInFormStyles.error}>
+                    <Text style={GLOBAL_STYLES.error}>
                       {errors.userName.message}
                     </Text>
                   )}
@@ -76,18 +95,22 @@ const SignInForm = () => {
                     name="password"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
-                        style={signInFormStyles.input}
+                        style={[
+                          GLOBAL_STYLES.input,
+                          isLoading && GLOBAL_STYLES.inputDisabled,
+                        ]}
                         value={value}
                         onChangeText={onChange}
                         placeholder="Password"
-                        placeholderTextColor={'#9370db'}
+                        placeholderTextColor={COLORS.purple}
+                        editable={!isLoading}
                       />
                     )}
                   />
 
-                  {errors.userName?.message && (
-                    <Text style={signInFormStyles.error}>
-                      {errors.userName.message}
+                  {errors.password?.message && (
+                    <Text style={GLOBAL_STYLES.error}>
+                      {errors.password.message}
                     </Text>
                   )}
                 </View>
@@ -95,21 +118,25 @@ const SignInForm = () => {
                 <View>
                   <Controller
                     control={signInFormControl}
-                    name="password"
+                    name="confirmPassword"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
-                        style={signInFormStyles.input}
+                        style={[
+                          GLOBAL_STYLES.input,
+                          isLoading && GLOBAL_STYLES.inputDisabled,
+                        ]}
                         value={value}
                         onChangeText={onChange}
                         placeholder="Confirm password"
-                        placeholderTextColor={'#9370db'}
+                        placeholderTextColor={COLORS.purple}
+                        editable={!isLoading}
                       />
                     )}
                   />
 
-                  {errors.userName?.message && (
-                    <Text style={signInFormStyles.error}>
-                      {errors.userName.message}
+                  {errors.confirmPassword?.message && (
+                    <Text style={GLOBAL_STYLES.error}>
+                      {errors.confirmPassword.message}
                     </Text>
                   )}
                 </View>
@@ -118,43 +145,37 @@ const SignInForm = () => {
               <View style={signInFormStyles.buttonsContainer}>
                 <TouchableOpacity
                   style={[
-                    signInFormStyles.button,
-                    signInFormStyles.signInButton,
+                    GLOBAL_STYLES.primaryButton,
+                    isLoading && GLOBAL_STYLES.buttonDisabled,
                   ]}
+                  onPress={handleSignIn}
+                  disabled={isLoading}
                 >
-                  <Text style={[signInFormStyles.buttonText]}>Sign in</Text>
+                  <Text style={GLOBAL_STYLES.primaryButtonText}>Sign in</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={[
-                    signInFormStyles.button,
-                    signInFormStyles.socialMeidaButton,
+                    GLOBAL_STYLES.secondaryButton,
+                    isLoading && GLOBAL_STYLES.buttonDisabled,
                   ]}
                   onPress={() => router.replace('/login')}
+                  disabled={isLoading}
                 >
-                  <Text
-                    style={[
-                      signInFormStyles.buttonText,
-                      signInFormStyles.socialMeidaButtonText,
-                    ]}
-                  >
-                    Login
-                  </Text>
+                  <Text style={GLOBAL_STYLES.secondaryButtonText}>Login</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={[
-                    signInFormStyles.button,
+                    GLOBAL_STYLES.secondaryButton,
                     signInFormStyles.socialMeidaButton,
+                    isLoading && GLOBAL_STYLES.buttonDisabled,
                   ]}
+                  onPress={signInWithGoogle}
+                  disabled={isLoading}
                 >
                   <GoogleLogo width={24} height={24} />
-                  <Text
-                    style={[
-                      signInFormStyles.buttonText,
-                      signInFormStyles.socialMeidaButtonText,
-                    ]}
-                  >
+                  <Text style={GLOBAL_STYLES.secondaryButtonText}>
                     Sign in with Google
                   </Text>
                 </TouchableOpacity>

@@ -3,7 +3,6 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   Pressable,
   SafeAreaView,
   Text,
@@ -17,34 +16,43 @@ import { useLoginForm } from './useLoginForm';
 import { Controller } from 'react-hook-form';
 import { router } from 'expo-router';
 import { isEmpty } from 'lodash';
+import { GLOBAL_STYLES } from '@/styles/global';
+import { IS_IOS } from '@/constants';
+import { METRICS } from '@/styles/metrics';
+import { COLORS } from '@/styles/colors';
+import AnimatedMainLogo from '@/components/common/animatedMainLogo';
 
 const LoginForm = () => {
-  const { loginFormControl, errors, onSubmit } = useLoginForm();
+  const { loginFormControl, errors, isLoading, handleLogIn } = useLoginForm();
 
   return (
     <Pressable
-      style={{ flex: 1 }}
+      style={GLOBAL_STYLES.container}
       onPress={Keyboard.dismiss}
       accessible={false}
     >
       <ScreenGradientContainer>
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          behavior={IS_IOS ? 'padding' : 'height'}
           style={loginFormStyles.inner}
         >
           <SafeAreaProvider>
             <SafeAreaView style={loginFormStyles.safeArea}>
               <View style={loginFormStyles.logoContainer}>
-                <Image
-                  source={require('../../../assets/logos/ICGMainLogo.png')}
-                  style={{ width: 150, height: 150 }}
-                />
+                {isLoading ? (
+                  <AnimatedMainLogo />
+                ) : (
+                  <Image
+                    source={require('../../../assets/logos/ICGMainLogo.png')}
+                    style={GLOBAL_STYLES.mainLogo}
+                  />
+                )}
               </View>
 
               <View
                 style={{
-                  gap: isEmpty(errors) ? 20 : 0,
-                  marginBottom: isEmpty(errors) ? 20 : 0,
+                  gap: isEmpty(errors) ? METRICS.gap.medium : 0,
+                  marginBottom: isEmpty(errors) ? METRICS.gap.medium : 0,
                 }}
               >
                 <View>
@@ -53,17 +61,21 @@ const LoginForm = () => {
                     name="userName"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
-                        style={loginFormStyles.input}
+                        style={[
+                          GLOBAL_STYLES.input,
+                          isLoading && GLOBAL_STYLES.inputDisabled,
+                        ]}
                         value={value}
                         onChangeText={onChange}
                         placeholder="Username"
-                        placeholderTextColor={'#9370db'}
+                        placeholderTextColor={COLORS.purple}
+                        editable={!isLoading}
                       />
                     )}
                   />
 
                   {errors.userName?.message && (
-                    <Text style={loginFormStyles.error}>
+                    <Text style={GLOBAL_STYLES.error}>
                       {errors.userName.message}
                     </Text>
                   )}
@@ -75,17 +87,21 @@ const LoginForm = () => {
                     name="password"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
-                        style={loginFormStyles.input}
+                        style={[
+                          GLOBAL_STYLES.input,
+                          isLoading && GLOBAL_STYLES.inputDisabled,
+                        ]}
                         value={value}
                         onChangeText={onChange}
                         placeholder="Password"
-                        placeholderTextColor={'#9370db'}
+                        placeholderTextColor={COLORS.purple}
+                        editable={!isLoading}
                       />
                     )}
                   />
 
                   {errors.password && (
-                    <Text style={loginFormStyles.error}>
+                    <Text style={GLOBAL_STYLES.error}>
                       {errors.password.message}
                     </Text>
                   )}
@@ -94,24 +110,24 @@ const LoginForm = () => {
 
               <View style={loginFormStyles.buttonsContainer}>
                 <TouchableOpacity
-                  style={[loginFormStyles.button, loginFormStyles.loginButton]}
-                  onPress={onSubmit}
+                  style={[
+                    GLOBAL_STYLES.primaryButton,
+                    isLoading && GLOBAL_STYLES.buttonDisabled,
+                  ]}
+                  onPress={handleLogIn}
+                  disabled={isLoading}
                 >
-                  <Text style={[loginFormStyles.buttonText]}>Login</Text>
+                  <Text style={GLOBAL_STYLES.primaryButtonText}>Login</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  style={[loginFormStyles.button, loginFormStyles.signUpButton]}
+                  style={[
+                    GLOBAL_STYLES.secondaryButton,
+                    isLoading && GLOBAL_STYLES.buttonDisabled,
+                  ]}
                   onPress={() => router.replace('/signIn')}
                 >
-                  <Text
-                    style={[
-                      loginFormStyles.buttonText,
-                      loginFormStyles.signUpButtonText,
-                    ]}
-                  >
-                    Sign in
-                  </Text>
+                  <Text style={GLOBAL_STYLES.secondaryButtonText}>Sign in</Text>
                 </TouchableOpacity>
               </View>
             </SafeAreaView>
