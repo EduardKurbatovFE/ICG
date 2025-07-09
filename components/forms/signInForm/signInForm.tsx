@@ -60,13 +60,19 @@ const SignInForm = () => {
               <View
                 style={{
                   gap: isEmpty(errors) ? METRICS.gap.medium : 0,
-                  marginBottom: isEmpty(errors) ? METRICS.gap.medium : 0,
+                  marginBottom: isEmpty(errors) ? METRICS.margin.medium : 0,
                 }}
               >
-                <View>
+                <View
+                  style={{
+                    marginBottom: errors.email?.message
+                      ? 0
+                      : METRICS.margin.medium,
+                  }}
+                >
                   <Controller
                     control={signInFormControl}
-                    name="userName"
+                    name="email"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
                         style={[
@@ -75,21 +81,27 @@ const SignInForm = () => {
                         ]}
                         value={value}
                         onChangeText={onChange}
-                        placeholder="Username"
+                        placeholder="Email"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
                       />
                     )}
                   />
 
-                  {errors.userName?.message && (
+                  {errors.email?.message && (
                     <Text style={GLOBAL_STYLES.error}>
-                      {errors.userName.message}
+                      {errors.email.message}
                     </Text>
                   )}
                 </View>
 
-                <View>
+                <View
+                  style={{
+                    marginBottom: errors.password?.message
+                      ? 0
+                      : METRICS.margin.medium,
+                  }}
+                >
                   <Controller
                     control={signInFormControl}
                     name="password"
@@ -104,6 +116,7 @@ const SignInForm = () => {
                         placeholder="Password"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
+                        secureTextEntry={true}
                       />
                     )}
                   />
@@ -115,7 +128,13 @@ const SignInForm = () => {
                   )}
                 </View>
 
-                <View>
+                <View
+                  style={{
+                    marginBottom: errors.confirmPassword?.message
+                      ? 0
+                      : METRICS.margin.medium,
+                  }}
+                >
                   <Controller
                     control={signInFormControl}
                     name="confirmPassword"
@@ -130,6 +149,7 @@ const SignInForm = () => {
                         placeholder="Confirm password"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
+                        secureTextEntry={true}
                       />
                     )}
                   />

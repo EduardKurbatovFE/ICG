@@ -1,10 +1,22 @@
+import { FIREBASE_AUTH } from '@/firebaseConfig';
+import { saveToken } from '@/tokenStorage';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { useForm, useFormState } from 'react-hook-form';
+import { Alert } from 'react-native';
 import * as yup from 'yup';
 
 const schema = yup.object().shape({
-  userName: yup.string().required('Username is required'),
+  email: yup
+    .string()
+    .required('Username is required')
+    .matches(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      {
+        message: 'Invalid email',
+      }
+    ),
   password: yup
     .string()
     .min(6)
@@ -29,8 +41,21 @@ export const useSignInForm = () => {
 
   const handleSignIn = () => {
     handleSubmit(async (data) => {
-      console.log(data);
-      console.log(errors);
+      try {
+        setLoading(true);
+        const userCredential = await createUserWithEmailAndPassword(
+          FIREBASE_AUTH,
+          data.email,
+          data.password
+        );
+        const token = await userCredential.user.getIdToken();
+        await saveToken('firebase_token', token);
+        Alert.alert('Success', 'Signed up and token saved!');
+      } catch (error: any) {
+        Alert.alert('Error', error.message);
+      } finally {
+        setLoading(false);
+      }
     })();
   };
 

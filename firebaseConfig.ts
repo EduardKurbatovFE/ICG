@@ -1,6 +1,13 @@
-// Import the functions you need from the SDKs you need
+// firebaseConfig.ts
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
+import { getAuth } from 'firebase/auth';
+// import {
+//   initializeAuth,
+//   getReactNativePersistence,
+//   Auth,
+// } from 'firebase/auth/react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import {
   FIREBASE_API_KEY,
   FIREBASE_AUTH_DOMAIN,
@@ -9,7 +16,7 @@ import {
   FIREBASE_MESSAGING_SENDER_ID,
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID,
-} from '@env';
+} from './env';
 
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -21,6 +28,8 @@ const firebaseConfig = {
   measurementId: FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const FIREBASE_APP = initializeApp(firebaseConfig);
+
+const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+
+export { FIREBASE_APP, FIREBASE_AUTH };

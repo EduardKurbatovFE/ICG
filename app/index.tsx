@@ -1,18 +1,23 @@
 import AnimatedMainLogo from '@/components/common/animatedMainLogo';
 import ScreenGradientContainer from '@/components/common/screenGradientContainer';
 import { METRICS } from '@/styles/metrics';
+import { getToken } from '@/tokenStorage';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 export default function Index() {
   useEffect(() => {
-    const isLoggedIn = false;
-    if (!isLoggedIn) {
-      setTimeout(() => {
+    const checkAuth = async () => {
+      const token = await getToken('firebase_token');
+      if (token) {
+        router.replace('/main');
+      } else {
         router.replace('/login');
-      }, 3000);
-    }
+      }
+    };
+
+    checkAuth();
   }, []);
 
   return (
