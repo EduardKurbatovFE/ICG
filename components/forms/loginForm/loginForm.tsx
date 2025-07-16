@@ -58,7 +58,7 @@ const LoginForm = () => {
                 <View>
                   <Controller
                     control={loginFormControl}
-                    name="userName"
+                    name="email"
                     render={({ field: { onChange, value } }) => (
                       <TextInput
                         style={[
@@ -74,9 +74,9 @@ const LoginForm = () => {
                     )}
                   />
 
-                  {errors.userName?.message && (
+                  {errors.email?.message && (
                     <Text style={GLOBAL_STYLES.error}>
-                      {errors.userName.message}
+                      {errors.email.message}
                     </Text>
                   )}
                 </View>
