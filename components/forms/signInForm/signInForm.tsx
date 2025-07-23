@@ -3,7 +3,6 @@ import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   SafeAreaView,
   Text,
   TextInput,
@@ -17,7 +16,6 @@ import { router } from 'expo-router';
 import { useSignInForm } from './useSignInForm';
 import { Controller } from 'react-hook-form';
 import { isEmpty } from 'lodash';
-import GoogleLogo from '../../../assets/logos/googleLogo.svg';
 import { METRICS } from '@/styles/metrics';
 import { GLOBAL_STYLES } from '@/styles/global';
 import { COLORS } from '@/styles/colors';
@@ -25,13 +23,8 @@ import { IS_IOS } from '@/constants';
 import AnimatedMainLogo from '@/components/common/animatedMainLogo';
 
 const SignInForm = () => {
-  const {
-    signInFormControl,
-    errors,
-    isLoading,
-    handleSignIn,
-    signInWithGoogle,
-  } = useSignInForm();
+  const { signInFormControl, errors, isLoading, handleSignIn } =
+    useSignInForm();
 
   return (
     <Pressable
@@ -128,13 +121,7 @@ const SignInForm = () => {
                   )}
                 </View>
 
-                <View
-                  style={{
-                    marginBottom: errors.confirmPassword?.message
-                      ? 0
-                      : METRICS.margin.medium,
-                  }}
-                >
+                <View>
                   <Controller
                     control={signInFormControl}
                     name="confirmPassword"
@@ -183,21 +170,6 @@ const SignInForm = () => {
                   disabled={isLoading}
                 >
                   <Text style={GLOBAL_STYLES.secondaryButtonText}>Login</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[
-                    GLOBAL_STYLES.secondaryButton,
-                    signInFormStyles.socialMeidaButton,
-                    isLoading && GLOBAL_STYLES.buttonDisabled,
-                  ]}
-                  onPress={signInWithGoogle}
-                  disabled={isLoading}
-                >
-                  <GoogleLogo width={24} height={24} />
-                  <Text style={GLOBAL_STYLES.secondaryButtonText}>
-                    Sign in with Google
-                  </Text>
                 </TouchableOpacity>
               </View>
             </SafeAreaView>

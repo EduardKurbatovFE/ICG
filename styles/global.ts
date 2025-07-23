@@ -23,6 +23,11 @@ export const GLOBAL_STYLES = StyleSheet.create({
   container: {
     flex: 1,
   },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   primaryButton: {
     ...BUTTON_STYLES,
     backgroundColor: darkBlue,

@@ -67,7 +67,7 @@ const LoginForm = () => {
                         ]}
                         value={value}
                         onChangeText={onChange}
-                        placeholder="Username"
+                        placeholder="Email"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
                       />
@@ -96,6 +96,7 @@ const LoginForm = () => {
                         placeholder="Password"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
+                        secureTextEntry={true}
                       />
                     )}
                   />
