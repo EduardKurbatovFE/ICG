@@ -1,19 +1,42 @@
+import { COLORS } from '@/styles/colors';
+import { METRICS } from '@/styles/metrics';
 import { StyleSheet } from 'react-native';
 
+const { purple, white, grey } = COLORS;
+
+const { padding, borderRadius, gap } = METRICS;
+
 export const countryOfOriginStyles = StyleSheet.create({
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: purple,
+    paddingVertical: padding.medium,
+    paddingHorizontal: padding.medium,
+    borderRadius,
+    gap: gap.medium,
+  },
+  countryButton: {
+    backgroundColor: white,
+    justifyContent: 'space-between',
+    borderRadius,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: padding.medium,
+  },
+  flagWrapper: {
+    borderColor: grey,
+    overflow: 'hidden',
+    height: 28,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

@@ -10,6 +10,7 @@ export default function Index() {
   useEffect(() => {
     const checkAuth = async () => {
       const token = await getToken('firebase_token');
+
       if (token) {
         router.replace('/main');
       } else {

@@ -1,9 +1,6 @@
 import React from 'react';
 import {
   Modal,
-  Pressable,
-  StyleSheet,
-  Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
@@ -17,8 +14,10 @@ const CountryOfOrigin = () => {
   const {
     coountryFlag,
     showCountryModal,
+    countryButtonsAssets,
     openCountryModal,
     closeCountryModal,
+    selectCarManufacturerCountry,
   } = useCountryOfOrigin();
 
   return (
@@ -36,16 +35,30 @@ const CountryOfOrigin = () => {
             onRequestClose={closeCountryModal}
           >
             <TouchableWithoutFeedback onPress={closeCountryModal}>
-              <View style={styles.modalBackground}>
+              <View style={countryOfOriginStyles.modalBackground}>
                 <TouchableWithoutFeedback>
-                  <View style={styles.modalContent}>
-                    <Text>This is your modal content</Text>
-                    <Pressable
-                      onPress={closeCountryModal}
-                      style={styles.closeButton}
-                    >
-                      <Text>Close</Text>
-                    </Pressable>
+                  <View style={countryOfOriginStyles.modalContent}>
+                    {countryButtonsAssets.map(
+                      ({ flag, countryname, image, needBorder }, index) => (
+                        <TouchableOpacity
+                          key={index}
+                          onPress={() =>
+                            selectCarManufacturerCountry(countryname)
+                          }
+                          style={countryOfOriginStyles.countryButton}
+                        >
+                          <View
+                            style={{
+                              borderWidth: needBorder ? 1 : 0,
+                              ...countryOfOriginStyles.flagWrapper,
+                            }}
+                          >
+                            {flag}
+                          </View>
+                          <View>{image}</View>
+                        </TouchableOpacity>
+                      )
+                    )}
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -56,30 +69,5 @@ const CountryOfOrigin = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  openButton: { padding: 10, backgroundColor: 'blue', borderRadius: 5 },
-  buttonText: { color: 'white' },
-  modalBackground: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: 'white',
-    borderRadius: 8,
-  },
-  closeButton: {
-    marginTop: 10,
-    padding: 8,
-    backgroundColor: '#eee',
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-});
 
 export default CountryOfOrigin;
