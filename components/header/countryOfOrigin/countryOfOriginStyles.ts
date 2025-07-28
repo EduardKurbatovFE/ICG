@@ -2,7 +2,7 @@ import { COLORS } from '@/styles/colors';
 import { METRICS } from '@/styles/metrics';
 import { StyleSheet } from 'react-native';
 
-const { purple, white, grey } = COLORS;
+const { white, grey } = COLORS;
 
 const { padding, borderRadius, gap } = METRICS;
 
@@ -15,9 +15,9 @@ export const countryOfOriginStyles = StyleSheet.create({
   },
   modalContent: {
     width: 300,
+    backgroundColor: grey,
     padding: 20,
     borderWidth: 1,
-    borderColor: purple,
     paddingVertical: padding.medium,
     paddingHorizontal: padding.medium,
     borderRadius,

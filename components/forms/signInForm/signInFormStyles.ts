@@ -1,7 +1,7 @@
 import { METRICS } from '@/styles/metrics';
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { gap, padding } = METRICS;
+const { gap, padding, margin } = METRICS;
 
 export const signInFormStyles = StyleSheet.create({
   container: {
@@ -25,6 +25,7 @@ export const signInFormStyles = StyleSheet.create({
   },
   buttonsContainer: {
     gap: gap.medium,
+    marginTop: margin.medium,
   },
   socialMeidaButton: {
     display: 'flex',

@@ -51,8 +51,7 @@ const LoginForm = () => {
 
               <View
                 style={{
-                  gap: isEmpty(errors) ? METRICS.gap.medium : 0,
-                  marginBottom: isEmpty(errors) ? METRICS.gap.medium : 0,
+                  gap: METRICS.gap.medium,
                 }}
               >
                 <View>
@@ -70,6 +69,7 @@ const LoginForm = () => {
                         placeholder="Email"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
+                        autoCapitalize="none"
                       />
                     )}
                   />

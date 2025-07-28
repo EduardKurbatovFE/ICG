@@ -1,25 +1,9 @@
+import React from 'react';
 import { COLORS } from '@/styles/colors';
 import { FONTS } from '@/styles/fonts';
-import { GLOBAL_STYLES } from '@/styles/global';
-import { METRICS } from '@/styles/metrics';
-import React, { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
-
-SplashScreen.preventAutoHideAsync();
 
 const HeaderTitle = () => {
-  const [loaded, error] = useFonts({
-    'Winky-Rough': require('../../../assets/fonts/WinkyRough-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded || error) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded, error]);
-
   return (
     <View
       style={{

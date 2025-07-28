@@ -52,17 +52,10 @@ const SignInForm = () => {
 
               <View
                 style={{
-                  gap: isEmpty(errors) ? METRICS.gap.medium : 0,
-                  marginBottom: isEmpty(errors) ? METRICS.margin.medium : 0,
+                  gap: METRICS.gap.medium,
                 }}
               >
-                <View
-                  style={{
-                    marginBottom: errors.email?.message
-                      ? 0
-                      : METRICS.margin.medium,
-                  }}
-                >
+                <View>
                   <Controller
                     control={signInFormControl}
                     name="email"
@@ -77,6 +70,7 @@ const SignInForm = () => {
                         placeholder="Email"
                         placeholderTextColor={COLORS.purple}
                         editable={!isLoading}
+                        autoCapitalize="none"
                       />
                     )}
                   />
@@ -88,13 +82,7 @@ const SignInForm = () => {
                   )}
                 </View>
 
-                <View
-                  style={{
-                    marginBottom: errors.password?.message
-                      ? 0
-                      : METRICS.margin.medium,
-                  }}
-                >
+                <View>
                   <Controller
                     control={signInFormControl}
                     name="password"

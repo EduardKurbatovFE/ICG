@@ -4,18 +4,21 @@ import { METRICS } from '@/styles/metrics';
 import { getToken } from '@/tokenStorage';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
+import { Text } from 'react-native';
 import { StyleSheet, View } from 'react-native';
 
 export default function Index() {
   useEffect(() => {
-    const checkAuth = async () => {
-      const token = await getToken('firebase_token');
+    const checkAuth = () => {
+      setTimeout(async () => {
+        const token = await getToken('firebase_token');
 
-      if (token) {
-        router.replace('/main');
-      } else {
-        router.replace('/login');
-      }
+        if (token) {
+          router.replace('/main');
+        } else {
+          router.replace('/login');
+        }
+      }, 1500);
     };
 
     checkAuth();

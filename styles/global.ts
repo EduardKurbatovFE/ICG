@@ -62,7 +62,7 @@ export const GLOBAL_STYLES = StyleSheet.create({
   },
   error: {
     color: error,
-    marginVertical: margin.medium,
+    marginTop: margin.medium,
     paddingHorizontal: padding.medium,
   },
   mainLogo: {

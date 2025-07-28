@@ -1,7 +1,7 @@
 import { METRICS } from '@/styles/metrics';
 import { StyleSheet } from 'react-native';
 
-const { padding, gap } = METRICS;
+const { padding, margin, gap } = METRICS;
 
 export const loginFormStyles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
@@ -20,6 +20,7 @@ export const loginFormStyles = StyleSheet.create({
     marginBottom: 30,
   },
   buttonsContainer: {
+    marginTop: margin.medium,
     gap: gap.medium,
   },
 });
